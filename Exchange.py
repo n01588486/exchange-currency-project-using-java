@@ -1,9 +1,15 @@
 def nToMoneyStr(n: float) -> str:
-    if abs(n) < 0.01:
+    if n != 0 and abs(n) < 0.01:
         return "0.01"
     strn = str(n*100)
     strn = strn.split(".")[0]
-    return strn[:-2] + "." + strn[-2:]
+    if abs(n) < 1:
+        if len(strn) == 1:
+            return "0.0" + strn
+        else:
+            return "0." + strn
+    else:
+        return strn[:-2] + "." + strn[-2:]
 
 
 if __name__ == '__main__':
