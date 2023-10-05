@@ -1,3 +1,17 @@
+def nToMoneyStr(n: float) -> str:
+    if n != 0 and abs(n) < 0.01:
+        return "0.01"
+    strn = str(n*100)
+    strn = strn.split(".")[0]
+    if abs(n) < 1:
+        if len(strn) == 1:
+            return "0.0" + strn
+        else:
+            return "0." + strn
+    else:
+        return strn[:-2] + "." + strn[-2:]
+
+
 if __name__ == '__main__':
     crossRateTable = {
         "CAD": {"CAD": 1, "USD": 0.7625},
@@ -9,14 +23,17 @@ if __name__ == '__main__':
         "CHF": {"CAD": 1.3160, "USD": 1.0029},
         "INR": {"CAD": 0.0179, "USD": 0.0137}
     }
+    while(1):
+        inHandCurrency = input("Please enter the currency in hand: ")
 
-    inHandCurrency = input("please enter the currency in hand (from): ")
+        requiredCurrency = input("Please enter the currency required: ")
 
-    requiredCurrency = input("please enter the currency required (to): ")
+        totalAmount = float(input("Please enter amount (current currency value): "))
 
-    totalAmount = float(input("please enter amount (current currency value): "))
+        exchangeRate = crossRateTable[inHandCurrency][requiredCurrency]
 
-    exchangeRate = crossRateTable[inHandCurrency][requiredCurrency]
+        exchangeAmount = totalAmount * exchangeRate
+        print(nToMoneyStr(totalAmount) + " in " + inHandCurrency + " is equivalent to " +
+              nToMoneyStr(exchangeAmount) + " in " + requiredCurrency)
 
-    exchangeAmount = totalAmount * exchangeRate
-    print("Total exchange amount: " + str(exchangeAmount))
+        print("*" * 45)
